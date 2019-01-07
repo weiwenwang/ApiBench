@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package protobuf;
+
+message Content
+{
+   int32     id = 1;
+   string    command = 2;
+}
+
+message Request
+{
+   int32     method = 1;
+   string    param = 2;
+}
+
+message BackContent
+{
+   int32     id = 1;
+   string    msg = 2;
+}
