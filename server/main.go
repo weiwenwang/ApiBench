@@ -10,6 +10,9 @@ import (
 	"github.com/golang/protobuf/proto"
 	"encoding/binary"
 	"bytes"
+	"strings"
+	"github.com/weiwenwang/ApiBench/common"
+	"github.com/weiwenwang/ApiBench/server/ser"
 )
 
 func main() {
@@ -55,7 +58,9 @@ func doMsg(msg string, msg_chan chan []byte) {
 	Content := &protobuf.Content{}
 	proto.Unmarshal([]byte(msg), Content)
 	fmt.Println(Content.Command)
-
+	//addrequest url http://www.baidu.com -c 200 -s 1000
+	param := strings.Split(Content.Command, " ")
+	GetMsgType(param)
 	if Content.Command == "List" {
 		p_back := &protobuf.BackContent{}
 		p_back.Id = _const.LIST
@@ -65,6 +70,16 @@ func doMsg(msg string, msg_chan chan []byte) {
 	}
 }
 
+func GetMsgType(param []string) {
+	ser1 := ser.GetSer()
+	if param[0] == "addrequest" {
+		re := common.Request{}
+		re.C = 200
+		re.Ps = 10
+		// 添加到列表里面去
+		ser1.List = append(ser1.List, re)
+	}
+}
 func send(conn net.Conn, ch []byte) {
 	fmt.Println("发送了")
 	headSize := len(ch)

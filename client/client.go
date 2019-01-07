@@ -45,6 +45,7 @@ func readFromStdio(ch chan []byte) {
 	for {
 		reader := bufio.NewReader(os.Stdin)
 		data, _, _ := reader.ReadLine()
+		// 去掉前后空格
 		data = []byte(strings.Trim(string(data), " "))
 		data_str := string(data)
 		if (strings.EqualFold(data_str, "")) { // 直接按的回车, 不做处理

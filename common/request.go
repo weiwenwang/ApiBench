@@ -8,4 +8,6 @@ type Request struct {
 	Path     string
 	File     string
 	Param    string
+	C        int16
+	Ps       int16
 }
